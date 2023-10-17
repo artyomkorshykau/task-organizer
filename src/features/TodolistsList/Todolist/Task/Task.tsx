@@ -1,11 +1,11 @@
-import {changeTaskStatusAC, changeTitleAC, removeTaskTC} from "../state/tasks-reducer";
+import {changeTaskStatusAC, changeTitleAC, removeTaskTC} from "../../tasks-reducer";
 import React, {ChangeEvent, useCallback} from "react";
 import IconButton from "@mui/material/IconButton";
 import HighlightOffOutlined from "@mui/icons-material/HighlightOffOutlined";
 import Checkbox from "@mui/material/Checkbox";
-import EditableSpan from "./EditableSpan";
-import {TaskStatuses, TaskType} from "../api/todolists-api";
-import {useAppDispatch} from "../state/store";
+import EditableSpan from "../../../../components/EditableSpan/EditableSpan";
+import {TaskStatuses, TaskType} from "../../../../api/todolists-api";
+import {useAppDispatch} from "../../../../app/store";
 
 export const Task = React.memo((props: TaskPropsType) => {
     const dispatch = useAppDispatch()
