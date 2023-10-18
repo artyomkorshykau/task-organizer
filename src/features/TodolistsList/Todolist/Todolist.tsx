@@ -6,22 +6,22 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import Clear from "@mui/icons-material/Clear";
 import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "../../../app/store";
+import {AppRootStateType} from "../../../app/store";
 import {addTaskTC, fetchTaskTC} from "../tasks-reducer";
 import {Task} from "./Task/Task";
 import {TaskStatuses, TaskType} from "../../../api/todolists-api";
 import {changeTodolistFilterAC, FilterValuesType, TodolistDomainType} from "../todolist-reducer";
+import {useAppDispatch, useAppSelector} from "../../../app/customHooks";
 
 
 export const Todolist = React.memo((props: PropsType) => {
-    console.log(props.todolist)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(fetchTaskTC(props.id))
     }, [])
 
-    const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.id])
+    const tasks = useAppSelector(state => state.tasks[props.id])
 
 
     const onClickHandler = useCallback((value: FilterValuesType, todolistId: string) => {

@@ -62,26 +62,23 @@ export const setTasksAC = (todoListId: string, tasks: TaskType[]) =>
 
 
 // -------------------------------THUNK CREATORS-------------------------------
-export const fetchTaskTC = (todoListId: string): AppThunk => (dispatch) => {
+export const fetchTaskTC = (todoListId: string): AppThunk => (dispatch) =>
     todolistsAPI.getTasks(todoListId)
         .then(res => {
             dispatch(setTasksAC(todoListId, res.data.items))
         })
-}
 
-export const removeTaskTC = (todolistId: string, id: string): AppThunk => (dispatch) => {
+export const removeTaskTC = (todolistId: string, id: string): AppThunk => (dispatch) =>
     todolistsAPI.deleteTask(todolistId, id)
         .then(() => {
             dispatch(removeTaskAC(id, todolistId))
         })
-}
 
-export const addTaskTC = (title: string, todolistID: string) => (dispatch: Dispatch) => {
+export const addTaskTC = (title: string, todolistID: string):AppThunk => (dispatch) =>
     todolistsAPI.createTask(todolistID, title)
         .then(res => {
             dispatch(addTaskAC(res.data.data.item))
         })
-}
 
 export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelType, todolistID: string): AppThunk =>
     (dispatch, getState: () => AppRootStateType) => {
