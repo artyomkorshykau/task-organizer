@@ -42,7 +42,7 @@ export const TodolistsList: React.FC = () => {
         <Grid container spacing={3}>
             {todolists.map(tl => {
                 return (<Grid item>
-                    <Paper style={{padding: '10px', backgroundColor: 'antiquewhite'}}>
+                    <Paper style={{padding: '10px', backgroundColor: 'transparent'}} elevation={10} square={false}>
                         <Todolist
                             todolist={tl}
                             key={tl.id}

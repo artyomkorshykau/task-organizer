@@ -26,7 +26,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     return <div key={props.task.id}>
 
         <IconButton aria-label="delete" onClick={removeTask}>
-            <HighlightOffOutlined color='warning'/>
+            <HighlightOffOutlined color='error'/>
         </IconButton>
 
         <Checkbox onChange={onChangeHandler} checked={props.task.status !== TaskStatuses.New} color="primary"/>

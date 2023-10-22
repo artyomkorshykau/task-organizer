@@ -5,11 +5,9 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import Clear from "@mui/icons-material/Clear";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../app/store";
 import {addTaskTC, fetchTaskTC} from "../tasks-reducer";
 import {Task} from "./Task/Task";
-import {TaskStatuses, TaskType} from "../../../api/todolists-api";
+import {TaskStatuses} from "../../../api/todolists-api";
 import {changeTodolistFilterAC, FilterValuesType, TodolistDomainType} from "../todolist-reducer";
 import {useAppDispatch, useAppSelector} from "../../../app/customHooks";
 
@@ -45,19 +43,19 @@ export const Todolist = React.memo((props: PropsType) => {
         <IconButton aria-label="delete" onClick={() => {
             props.removeTodolist(props.id)
         }} style={{width: '100%', borderRadius: '0px'}}>
-            <Clear color={'warning'}/>
+            <Clear color={'error'}/>
         </IconButton>
-        <h3 style={{textAlign: 'center'}}><EditableSpan title={props.title} onChange={props.changeTodolistTitle}
+        <h3 style={{textAlign: 'center', color: 'white'}}><EditableSpan title={props.title} onChange={props.changeTodolistTitle}
                                                         id={props.id}/>
         </h3>
         <AddItemForm addTask={addTask}/>
-        <div style={{padding: '0px'}}>
+        <div style={{padding: '0px', color: 'white'}}>
             {
                 tasksForTodolist.map(t => <Task task={t} todolistID={props.id} key={t.id}/>)
             }
         </div>
         <div style={{textAlign: 'center'}}>
-            <ButtonGroup size="small" aria-label="small button group">
+            <ButtonGroup size="small" aria-label="small button group" style={{paddingTop: '20px'}}>
                 <Button variant={props.todolist.filter === 'all' ? "contained" : "outlined"}
                         onClick={() => {
                             onClickHandler('all', props.id)
