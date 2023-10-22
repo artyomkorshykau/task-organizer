@@ -2,6 +2,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateModelTaskTyp
 import {AppRootStateType, AppThunk} from "../../app/store";
 import {Dispatch} from "redux";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolist-reducer";
+import {setErrorAC, setStatusAC} from "../../app/app-reducer";
 
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionTaskType): TasksStateType => {
@@ -62,26 +63,49 @@ export const setTasksAC = (todoListId: string, tasks: TaskType[]) =>
 
 
 // -------------------------------THUNK CREATORS-------------------------------
-export const fetchTaskTC = (todoListId: string): AppThunk => (dispatch) =>
-    todolistsAPI.getTasks(todoListId)
-        .then(res => {
-            dispatch(setTasksAC(todoListId, res.data.items))
-        })
+export const fetchTaskTC = (todoListId: string): AppThunk => {
+    return (dispatch) => {
+        dispatch(setStatusAC('loading'))
+        todolistsAPI.getTasks(todoListId)
+            .then(res => {
+                dispatch(setTasksAC(todoListId, res.data.items))
+                dispatch(setStatusAC('succeeded'))
+            })
+    }
+}
 
-export const removeTaskTC = (todolistId: string, id: string): AppThunk => (dispatch) =>
-    todolistsAPI.deleteTask(todolistId, id)
-        .then(() => {
-            dispatch(removeTaskAC(id, todolistId))
-        })
+export const removeTaskTC = (todolistId: string, id: string): AppThunk => {
+    return (dispatch) => {
+        todolistsAPI.deleteTask(todolistId, id)
+            .then(() => {
+                dispatch(removeTaskAC(id, todolistId))
+            })
+    }
+}
 
-export const addTaskTC = (title: string, todolistID: string):AppThunk => (dispatch) =>
-    todolistsAPI.createTask(todolistID, title)
-        .then(res => {
-            dispatch(addTaskAC(res.data.data.item))
-        })
+export const addTaskTC = (title: string, todolistID: string): AppThunk => {
+    return (dispatch) => {
+        dispatch(setStatusAC('loading'))
+        todolistsAPI.createTask(todolistID, title)
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(addTaskAC(res.data.data.item))
+                    dispatch(setStatusAC('succeeded'))
+                } else {
+                    if (res.data.messages.length) {
+                        dispatch(setErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setErrorAC('Error'))
+                    }
+                    dispatch(setStatusAC('failed'))
+                }
 
-export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelType, todolistID: string): AppThunk =>
-    (dispatch, getState: () => AppRootStateType) => {
+            })
+    }
+}
+
+export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelType, todolistID: string): AppThunk => {
+    return (dispatch, getState: () => AppRootStateType) => {
         const task = getState().tasks[todolistID].find(el => el.id === taskID)
         if (!task) {
             alert('task not found!')
@@ -101,6 +125,7 @@ export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelT
                 dispatch(changeTaskStatusAC(taskID, apiModel.status, todolistID))
             })
     }
+}
 
 
 // -------------------------------TYPES-------------------------------

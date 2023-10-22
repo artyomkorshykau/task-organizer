@@ -8,12 +8,20 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import {Menu} from "@mui/icons-material";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import {LinearProgress} from "@mui/material";
+import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./store";
+import {RequestStatusType} from "./app-reducer";
 
 
 function App() {
 
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+
     return (
-        <div className="App">
+        <div>
+                <ErrorSnackBar/>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -30,9 +38,10 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress color="inherit"/>}
             </AppBar>
             <Container fixed>
-                <TodolistsList/>
+                <TodolistsList />
             </Container>
         </div>
     );
