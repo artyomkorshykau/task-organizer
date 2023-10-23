@@ -1,6 +1,7 @@
 import {todolistsAPI, TodolistType} from "../../api/todolists-api";
 import {AppThunk} from "../../app/store";
-import {RequestStatusType, setStatusAC} from "../../app/app-reducer";
+import {RequestStatusType, setAppStatusAC} from "../../app/app-reducer";
+import {handleServerNetworkError} from "../../utils/error-utils";
 
 
 const initialState: TodolistDomainType[] = []
@@ -46,12 +47,12 @@ export const setTodolistsAC = (todolists: TodolistType[]) =>
 
 export const fetchTodolistsTC = (): AppThunk => async dispatch => {
     try {
-        dispatch(setStatusAC('loading'))
+        dispatch(setAppStatusAC('loading'))
         const res = await todolistsAPI.getTodolist()
         dispatch(setTodolistsAC(res.data))
-        dispatch(setStatusAC('succeeded'))
-    } catch (err) {
-        throw new Error()
+        dispatch(setAppStatusAC('succeeded'))
+    } catch (error: any) {
+        handleServerNetworkError(error.message, dispatch)
     }
 
 }
@@ -68,10 +69,10 @@ export const removeTodolistTC = (todolistID: string): AppThunk => async dispatch
 
 export const addTodolistTC = (title: string): AppThunk => async dispatch => {
     try {
-        dispatch(setStatusAC('loading'))
+        dispatch(setAppStatusAC('loading'))
         const res = await todolistsAPI.createTodolist(title)
         dispatch(addTodolistAC(res.data.data.item))
-        dispatch(setStatusAC('succeeded'))
+        dispatch(setAppStatusAC('succeeded'))
     } catch (err) {
         throw new Error()
     }

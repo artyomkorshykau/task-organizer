@@ -10,16 +10,17 @@ import {Task} from "./Task/Task";
 import {TaskStatuses} from "../../../api/todolists-api";
 import {changeTodolistFilterAC, FilterValuesType, TodolistDomainType} from "../todolist-reducer";
 import {useAppDispatch, useAppSelector} from "../../../app/customHooks";
+import {Navigate} from "react-router-dom";
 
 
 export const Todolist = React.memo((props: PropsType) => {
+
     const dispatch = useAppDispatch()
+    const tasks = useAppSelector(state => state.tasks[props.id])
 
     useEffect(() => {
         dispatch(fetchTaskTC(props.id))
     }, [])
-
-    const tasks = useAppSelector(state => state.tasks[props.id])
 
 
     const onClickHandler = useCallback((value: FilterValuesType, todolistId: string) => {
@@ -45,8 +46,9 @@ export const Todolist = React.memo((props: PropsType) => {
         }} style={{width: '100%', borderRadius: '0px'}}>
             <Clear color={'error'}/>
         </IconButton>
-        <h3 style={{textAlign: 'center', color: 'white'}}><EditableSpan title={props.title} onChange={props.changeTodolistTitle}
-                                                        id={props.id}/>
+        <h3 style={{textAlign: 'center', color: 'white'}}><EditableSpan title={props.title}
+                                                                        onChange={props.changeTodolistTitle}
+                                                                        id={props.id}/>
         </h3>
         <AddItemForm addTask={addTask}/>
         <div style={{padding: '0px', color: 'white'}}>
