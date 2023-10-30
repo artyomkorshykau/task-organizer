@@ -8,7 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import {Menu} from "@mui/icons-material";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import {CircularProgress, LinearProgress} from "@mui/material";
+import {LinearProgress} from "@mui/material";
 import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";

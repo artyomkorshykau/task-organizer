@@ -3,7 +3,8 @@ import {ActionTaskType, tasksReducer} from "../features/TodolistsList/tasks-redu
 import {ActionTodolistType, todolistsReducer} from "../features/TodolistsList/todolist-reducer";
 import thunkMiddleWare, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {ActionAppType, appReducer} from "./app-reducer";
-import {ActionAuthType, authReducer} from "../features/Login/auth-reducer";
+import {authReducer} from "../features/Login/auth-reducer";
+import {configureStore} from "@reduxjs/toolkit";
 
 // объедениям редьюсеры в один рутовый редьюсер с помощью combineReducers
 const rootReducer = combineReducers({
@@ -14,7 +15,10 @@ const rootReducer = combineReducers({
 })
 
 //непосредственно создаём store
-export const store = createStore(rootReducer, applyMiddleware(thunkMiddleWare));
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleWare)
+})
 
 //автоматическое определение типов
 export type AppRootStateType = ReturnType<typeof rootReducer>
@@ -24,7 +28,6 @@ export type AppActionType =
     | ActionTaskType
     | ActionTodolistType
     | ActionAppType
-    | ActionAuthType
 
 //это для того, что бы в консоли браузера обращаться к store
 // @ts-ignore

@@ -5,14 +5,14 @@ import {AppActionType} from "../app/store";
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch<AppActionType>) => {
     if (data.messages.length) {
-        dispatch(setAppErrorAC(data.messages[0]))
+        dispatch(setAppErrorAC({error: data.messages[0]}))
     } else {
-        dispatch(setAppErrorAC('Error'))
+        dispatch(setAppErrorAC({error: 'Error'}))
     }
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setAppStatusAC({status: 'failed'}))
 }
 
 export const handleServerNetworkError = (message: string, dispatch: Dispatch<AppActionType>) => {
-    dispatch(setAppErrorAC(message ? message : 'Error'))
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setAppErrorAC({error: message ? message : 'Error'}))
+    dispatch(setAppStatusAC({status: 'failed'}))
 }

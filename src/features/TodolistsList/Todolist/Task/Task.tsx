@@ -1,4 +1,4 @@
-import {changeTaskStatusAC, changeTitleAC, removeTaskTC} from "../../tasks-reducer";
+import {removeTaskTC, updateTaskAC, updateTaskTC} from "../../tasks-reducer";
 import React, {ChangeEvent, useCallback} from "react";
 import IconButton from "@mui/material/IconButton";
 import HighlightOffOutlined from "@mui/icons-material/HighlightOffOutlined";
@@ -10,13 +10,13 @@ import {useAppDispatch} from "../../../../app/customHooks";
 export const Task = React.memo((props: TaskPropsType) => {
     const dispatch = useAppDispatch()
 
-    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
-        dispatch(changeTaskStatusAC(props.task.id, newIsDoneValue, props.todolistID))
+        dispatch(updateTaskTC(props.task.id, {status: newIsDoneValue}, props.todolistID))
     }, [props.task.id, props.todolistID])
 
-    const onChange = useCallback((title: string) => {
-        dispatch(changeTitleAC(props.task.id, title, props.todolistID))
+    const changeTaskTitle = useCallback((title: string) => {
+        dispatch(updateTaskTC(props.task.id, {title: title}, props.todolistID))
     }, [props.task.id, props.todolistID])
 
     const removeTask = useCallback(() => {
@@ -29,10 +29,10 @@ export const Task = React.memo((props: TaskPropsType) => {
             <HighlightOffOutlined color='error'/>
         </IconButton>
 
-        <Checkbox onChange={onChangeHandler} checked={props.task.status !== TaskStatuses.New} color="primary"/>
+        <Checkbox onChange={changeTaskStatus} checked={props.task.status !== TaskStatuses.New} color="primary"/>
 
         <span className={props.task.status == TaskStatuses.Completed ? "is-done" : ""}>
-            <EditableSpan title={props.task.title} onChange={onChange} id={props.task.id}/>
+            <EditableSpan title={props.task.title} onChange={changeTaskTitle} id={props.task.id}/>
         </span>
     </div>
 })

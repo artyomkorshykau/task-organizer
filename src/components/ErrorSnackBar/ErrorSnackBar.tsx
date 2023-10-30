@@ -23,7 +23,7 @@ export function ErrorSnackBar() {
             return;
         }
 
-        dispatch(setAppErrorAC(null))
+        dispatch(setAppErrorAC({error: null}))
     };
 
     const isOpen = error !== null
@@ -31,10 +31,10 @@ export function ErrorSnackBar() {
     return (
         <Stack spacing={2} sx={{width: '100%'}}>
             <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="error"
-                           sx={{width: '100%', color: 'white'}}>
-                        {error}
-                    </Alert>
+                <Alert onClose={handleClose} severity="error"
+                       sx={{width: '100%', color: 'white'}}>
+                    {error}
+                </Alert>
             </Snackbar>
         </Stack>
     );

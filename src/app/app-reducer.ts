@@ -1,35 +1,32 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../api/todolists-api";
 import {setIsLoggedIn} from "../features/Login/auth-reducer";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState: InitialStateType = {
-    status: 'idle',
-    error: null,
+const initialState = {
+    status: 'idle' as RequestStatusType,
+    error: null as string | null,
     initialized: false
 }
 
-export const appReducer = (state: InitialStateType = initialState, action: ActionAppType): InitialStateType => {
-    switch (action.type) {
-        case 'APP/SET-STATUS' : {
-            return {...state, status: action.status}
+const slice = createSlice({
+    name: 'app',
+    initialState: initialState,
+    reducers: {
+        setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
+            state.status = action.payload.status
+        },
+        setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
+            state.error = action.payload.error
+        },
+        setAppInitializedAC(state, action: PayloadAction<{ initialized: boolean }>) {
+            state.initialized = action.payload.initialized
         }
-        case 'APP/SET-ERROR': {
-            return {...state, error: action.error}
-        }
-        case 'APP/SET-INITIALIZED' :
-            return {...state, initialized: action.value}
-        default:
-            return {...state}
     }
-}
+})
 
-// -------------------------------ACTION CREATORS-------------------------------
-export const setAppStatusAC = (status: RequestStatusType) =>
-    ({type: 'APP/SET-STATUS', status}) as const
-export const setAppErrorAC = (error: string | null) =>
-    ({type: 'APP/SET-ERROR', error}) as const
-export const setAppInitializedAC = (value: boolean) =>
-    ({type: 'APP/SET-INITIALIZED', value}) as const
+export const appReducer = slice.reducer
+export const {setAppInitializedAC, setAppStatusAC, setAppErrorAC} = slice.actions
 
 // -------------------------------THUNK CREATORS-------------------------------
 export const initializedAppTC = () => {
@@ -37,22 +34,16 @@ export const initializedAppTC = () => {
         authAPI.me()
             .then(res => {
                 if (res.data.resultCode === 0) {
-                    dispatch(setIsLoggedIn(true))
+                    dispatch(setIsLoggedIn({value: true}))
                 } else {
 
                 }
-                dispatch(setAppInitializedAC(true))
+                dispatch(setAppInitializedAC({initialized: true}))
             })
     }
 }
 
 // -------------------------------TYPES-------------------------------
-type InitialStateType = {
-    status: RequestStatusType
-    error: string | null
-    initialized: boolean
-}
-
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type ActionAppType =

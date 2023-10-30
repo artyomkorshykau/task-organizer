@@ -7,21 +7,26 @@ const EditableSpan = memo((props: EditableSpanPropsType) => {
     let [editMode, setEditMode] = useState(false)
     let [title, setTitle] = useState(props.title)
 
-    const onDoubleHandler = () => {
+    const activatedEditMode = () => {
         setEditMode(!editMode)
-        props.onChange(title, props.id)
+        setTitle(props.title)
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const activatedViewMode = () => {
+        setEditMode(false);
+        props.onChange(title, props.id);
+    }
+
+    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
 
     return (
         editMode ?
-            <TextField id="standard-basic" variant="standard" value={title} onBlur={onDoubleHandler}
-                       autoFocus onChange={onChangeHandler}/> :
-            <span onDoubleClick={onDoubleHandler}>{props.title}</span>
+            <TextField id="standard-basic" variant="standard" value={title} onBlur={activatedViewMode}
+                       autoFocus onChange={changeTitle}/> :
+            <span onDoubleClick={activatedEditMode}>{props.title}</span>
     );
 });
 
