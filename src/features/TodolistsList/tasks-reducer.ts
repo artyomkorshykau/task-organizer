@@ -1,15 +1,7 @@
-import {
-    TaskPriorities,
-    TaskStatuses,
-    TaskType,
-    todolistsAPI,
-    TodolistType,
-    UpdateModelTaskType
-} from "../../api/todolists-api";
+import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateModelTaskType} from "../../api/todolists-api";
 import {AppRootStateType, AppThunk} from "../../app/store";
-import {Dispatch} from "redux";
-import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolist-reducer";
-import {setAppErrorAC, setAppStatusAC} from "../../app/app-reducer";
+import {addTodolistAC, clearTodosDataAC, removeTodolistAC, setTodolistsAC} from "./todolist-reducer";
+import {setAppStatusAC} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
@@ -53,6 +45,9 @@ const slice = createSlice({
         })
         builder.addCase(setTodolistsAC, (state, action) => {
             action.payload.todolists.forEach(el => state[el.id] = [])
+        })
+        builder.addCase(clearTodosDataAC, () => {
+            return {}
         })
     }
 

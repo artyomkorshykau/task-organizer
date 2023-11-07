@@ -72,7 +72,7 @@ export const Login = () => {
 
                     <FormControlLabel
                         label={'Remember'}
-                        control={<Checkbox {...formik.getFieldProps('remember')}
+                        control={<Checkbox {...formik.getFieldProps('rememberMe')}
                                            checked={formik.values.rememberMe}
                         />}
                     />

@@ -3,6 +3,7 @@ import {authAPI, LoginParamsType} from "../../api/todolists-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setAppStatusAC} from "../../app/app-reducer";
+import {clearTodosDataAC} from "../TodolistsList/todolist-reducer";
 
 const initialState = {
     isLoggedIn: false
@@ -47,6 +48,7 @@ export const logoutTC = () => {
                 if (res.data.resultCode === 0) {
                     dispatch(setIsLoggedIn({value: false}))
                     dispatch(setAppStatusAC({status: 'succeeded'}))
+                    dispatch(clearTodosDataAC())
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }

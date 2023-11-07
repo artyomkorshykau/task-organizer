@@ -1,27 +1,21 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import EditableSpan from "../../../components/EditableSpan/EditableSpan";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import Clear from "@mui/icons-material/Clear";
-import {addTaskTC, fetchTaskTC} from "../tasks-reducer";
+import {addTaskTC} from "../tasks-reducer";
 import {Task} from "./Task/Task";
 import {TaskStatuses} from "../../../api/todolists-api";
 import {changeTodolistFilterAC, FilterValuesType, TodolistDomainType} from "../todolist-reducer";
 import {useAppDispatch, useAppSelector} from "../../../app/customHooks";
-import {Navigate} from "react-router-dom";
 
 
 export const Todolist = React.memo((props: PropsType) => {
 
     const dispatch = useAppDispatch()
     const tasks = useAppSelector(state => state.tasks[props.id])
-
-    useEffect(() => {
-        dispatch(fetchTaskTC(props.id))
-    }, [])
-
 
     const onClickHandler = useCallback((value: FilterValuesType, todolistId: string) => {
         dispatch(changeTodolistFilterAC({id: todolistId, filter: value}))
