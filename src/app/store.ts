@@ -1,9 +1,9 @@
-import {AnyAction, applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
-import {ActionTaskType, tasksReducer} from "../features/TodolistsList/tasks-reducer";
-import {ActionTodolistType, todolistsReducer} from "../features/TodolistsList/todolist-reducer";
+import {AnyAction, combineReducers} from "redux";
+import {ActionTaskType, tasksReducer} from "features/TodolistsList/tasks-reducer";
+import {ActionTodolistType, todolistsReducer} from "features/TodolistsList/todolist-reducer";
 import thunkMiddleWare, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {ActionAppType, appReducer} from "./app-reducer";
-import {authReducer} from "../features/Login/auth-reducer";
+import {authReducer} from "features/Login/auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 // объедениям редьюсеры в один рутовый редьюсер с помощью combineReducers
@@ -21,7 +21,7 @@ export const store = configureStore({
 })
 
 //автоматическое определение типов
-export type AppRootStateType = ReturnType<typeof rootReducer>
+export type AppRootStateType = ReturnType<typeof store.getState>
 export type AppDispatchType = ThunkDispatch<AppRootStateType, any, AnyAction>
 export type AppThunk = ThunkAction<void, AppRootStateType, unknown, AppActionType>
 export type AppActionType =

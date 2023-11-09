@@ -7,24 +7,24 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import {Menu} from "@mui/icons-material";
-import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import {TodolistsList} from "features/TodolistsList/TodolistsList";
 import {LinearProgress} from "@mui/material";
-import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
-import {initializedAppTC, RequestStatusType} from "./app-reducer";
+import {ErrorSnackBar} from "components/ErrorSnackBar/ErrorSnackBar";
+import {initializedAppTC} from "./app-reducer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Login} from "../features/Login/Login";
-import {useAppDispatch} from "./customHooks";
-import {logoutTC} from "../features/Login/auth-reducer";
+import {Login} from "features/Login/Login";
+import {useAppDispatch, useAppSelector} from "./customHooks";
+import {logoutTC} from "features/Login/auth-reducer";
+import {selectIsLoggedIn} from "features/Login/auth-selectors";
+import {selectInitialized, selectStatus} from "app/app-selectors";
 
 
 function App() {
 
     const dispatch = useAppDispatch()
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-    const initialized = useSelector<AppRootStateType, boolean>(state => state.app.initialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const status = useAppSelector(selectStatus)
+    const initialized = useAppSelector(selectInitialized)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
     useEffect(() => {
         dispatch(initializedAppTC())

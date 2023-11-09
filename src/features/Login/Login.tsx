@@ -5,15 +5,14 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
-import {useAppDispatch} from "../../app/customHooks";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "app/customHooks";
 import {Navigate} from "react-router-dom";
+import {selectIsLoggedIn} from "features/Login/auth-selectors";
 
 export const Login = () => {
 
     const dispatch = useAppDispatch()
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
     const formik = useFormik({
 

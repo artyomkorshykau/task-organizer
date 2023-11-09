@@ -1,24 +1,19 @@
 import React, {useCallback, useEffect} from "react";
-
-import {
-    addTodolistTC,
-    changeTodolistTitleTC,
-    fetchTodolistsTC,
-    removeTodolistTC
-} from "./todolist-reducer";
+import {addTodolistTC, changeTodolistTitleTC, fetchTodolistsTC, removeTodolistTC} from "./todolist-reducer";
 import Grid from "@mui/material/Grid";
-import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
+import {AddItemForm} from "components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
-import {useAppDispatch, useAppSelector} from "../../app/customHooks";
-import {fetchTaskTC} from "./tasks-reducer";
+import {useAppDispatch, useAppSelector} from "app/customHooks";
 import {Navigate} from "react-router-dom";
+import {selectTodoList} from "features/TodolistsList/Todolist/todo-selector";
+import {selectIsLoggedIn} from "features/Login/auth-selectors";
 
 export const TodolistsList: React.FC = () => {
 
     const dispatch = useAppDispatch()
-    const todolists = useAppSelector(state => state.todoList)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const todolists = useAppSelector(selectTodoList)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
 
     useEffect(() => {
