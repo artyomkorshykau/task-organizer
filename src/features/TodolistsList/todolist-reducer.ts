@@ -4,9 +4,12 @@ import {RequestStatusType, setAppStatusAC} from "app/app-reducer";
 import {handleServerNetworkError} from "utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchTaskTC} from "features/TodolistsList/tasks-reducer";
+import {clearAppData, ClearAppDataType} from "common/actions/common.actions";
 
 
 const initialState: TodolistDomainType[] = []
+
+
 
 export const slice = createSlice({
     name: 'todolists',
@@ -37,10 +40,13 @@ export const slice = createSlice({
         },
         setTodolistsAC(state, action: PayloadAction<{ todolists: TodolistType[] }>) {
             return action.payload.todolists.map(el => ({...el, filter: 'all', entityStatus: 'idle'}))
-        },
-        clearTodosDataAC() {
-            return []
         }
+    },
+    extraReducers: builder => {
+        builder
+            .addCase(clearAppData, (state, action) => {
+                return action.payload.todos
+            })
     }
 })
 
@@ -54,7 +60,6 @@ export const {
     changeTodolistFilterAC,
     setTodolistsAC,
     changeTodolistEntityStatusAC,
-    clearTodosDataAC
 } = slice.actions
 
 // -------------------------------THUNK CREATORS-------------------------------
@@ -121,6 +126,6 @@ export  type ActionTodolistType =
     | ReturnType<typeof changeTodolistFilterAC>
     | ReturnType<typeof setTodolistsAC>
     | ReturnType<typeof changeTodolistEntityStatusAC>
-    | ReturnType<typeof clearTodosDataAC>
+    | ReturnType<typeof clearAppData>
 
 export type FilterValuesType = "all" | "active" | "completed";

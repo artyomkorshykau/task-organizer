@@ -1,7 +1,8 @@
-import {setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
-import {ResponseType} from '../api/todolists-api'
+import {setAppErrorAC, setAppStatusAC} from "app/app-reducer";
+import {ResponseType} from 'api/todolists-api'
 import {Dispatch} from "redux";
-import {AppActionType} from "../app/store";
+import {AppActionType} from "app/store";
+import {AxiosError} from "axios";
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch<AppActionType>) => {
     if (data.messages.length) {
@@ -12,7 +13,7 @@ export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatc
     dispatch(setAppStatusAC({status: 'failed'}))
 }
 
-export const handleServerNetworkError = (message: string, dispatch: Dispatch<AppActionType>) => {
-    dispatch(setAppErrorAC({error: message ? message : 'Error'}))
+export const handleServerNetworkError = (error: AxiosError<{ message: string }>, dispatch: Dispatch<AppActionType>) => {
+    dispatch(setAppErrorAC({error: error.message ? error.message : 'Error'}))
     dispatch(setAppStatusAC({status: 'failed'}))
 }

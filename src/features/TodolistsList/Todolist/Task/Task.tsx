@@ -6,6 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import EditableSpan from "components/EditableSpan/EditableSpan";
 import {TaskStatuses, TaskType} from "api/todolists-api";
 import {useAppDispatch} from "app/customHooks";
+import {string} from "prop-types";
 
 export const Task = React.memo((props: TaskPropsType) => {
     const dispatch = useAppDispatch()
@@ -20,7 +21,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     }, [props.task.id, props.todolistID])
 
     const removeTask = useCallback(() => {
-        dispatch(removeTaskTC(props.todolistID, props.task.id))
+            dispatch(removeTaskTC({id: props.task.id, todolistId: props.todolistID}))
     }, [props.task.id, props.todolistID])
 
     return <div key={props.task.id}>
