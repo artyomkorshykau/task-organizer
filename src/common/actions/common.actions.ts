@@ -1,7 +1,6 @@
 import {createAction} from "@reduxjs/toolkit";
-import {TaskType} from "api/todolists-api";
-import {TodolistDomainType} from "features/TodolistsList/todolist-reducer";
-import {TasksStateType} from "features/TodolistsList/tasks-reducer";
+import {TasksStateType} from "redux/tasks-reducer";
+import {TodolistDomainType} from "redux/todolist-reducer";
 
 export const clearAppData = createAction<ClearAppDataType>('common/clear-app-data')
 

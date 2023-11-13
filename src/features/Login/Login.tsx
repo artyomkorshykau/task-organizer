@@ -3,11 +3,12 @@ import Checkbox from "@mui/material/Checkbox";
 import {FormControlLabel, FormGroup, FormLabel, Grid} from '@mui/material';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {FormikHelpers, useFormik} from "formik";
-import {loginTC} from "./auth-reducer";
-import {useAppDispatch, useAppSelector} from "app/customHooks";
+import {useFormik} from "formik";
 import {Navigate} from "react-router-dom";
-import {selectIsLoggedIn} from "features/Login/auth-selectors";
+import {useAppDispatch, useAppSelector} from "utils/customHooks";
+import {selectIsLoggedIn} from "common/selectors/auth-selectors";
+import {loginTC} from "redux/auth-reducer";
+
 
 type FormValueType = {
     email: string
@@ -43,14 +44,9 @@ export const Login = () => {
             rememberMe: false
         },
 
-        onSubmit: async (values: FormValueType, formikHelpers: FormikHelpers<FormValueType>) => {
-            const action = await dispatch(loginTC(values))
-            if (loginTC.rejected.match(action)) {
-                if (action.payload?.fieldsErrors?.length) {
-                    const error = action.payload?.fieldsErrors[0]
-                    formikHelpers.setFieldError(error.field, error.error)
-                }
-            }
+        onSubmit: async (values) => {
+            dispatch(loginTC(values))
+
         }
     });
 

@@ -1,27 +1,30 @@
-import {removeTaskTC, updateTaskTC} from "../../tasks-reducer";
 import React, {ChangeEvent, useCallback} from "react";
 import IconButton from "@mui/material/IconButton";
 import HighlightOffOutlined from "@mui/icons-material/HighlightOffOutlined";
 import Checkbox from "@mui/material/Checkbox";
 import EditableSpan from "components/EditableSpan/EditableSpan";
 import {TaskStatuses, TaskType} from "api/todolists-api";
-import {useAppDispatch} from "app/customHooks";
-import {string} from "prop-types";
+import {useAppDispatch} from "utils/customHooks";
+import {removeTaskTC, updateTaskTC} from "redux/tasks-reducer";
 
 export const Task = React.memo((props: TaskPropsType) => {
     const dispatch = useAppDispatch()
 
     const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
-        dispatch(updateTaskTC(props.task.id, {status: newIsDoneValue}, props.todolistID))
+        dispatch(updateTaskTC({
+            taskID: props.task.id,
+            domainModel: {status: newIsDoneValue},
+            todolistID: props.todolistID
+        }))
     }, [props.task.id, props.todolistID])
 
     const changeTaskTitle = useCallback((title: string) => {
-        dispatch(updateTaskTC(props.task.id, {title: title}, props.todolistID))
+        dispatch(updateTaskTC({taskID: props.task.id, domainModel: {title: title}, todolistID: props.todolistID}))
     }, [props.task.id, props.todolistID])
 
     const removeTask = useCallback(() => {
-            dispatch(removeTaskTC({id: props.task.id, todolistId: props.todolistID}))
+        dispatch(removeTaskTC({id: props.task.id, todolistId: props.todolistID}))
     }, [props.task.id, props.todolistID])
 
     return <div key={props.task.id}>

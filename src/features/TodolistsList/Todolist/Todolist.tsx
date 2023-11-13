@@ -6,10 +6,10 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import Clear from "@mui/icons-material/Clear";
 import {Task} from "./Task/Task";
-import {TaskStatuses} from "api/todolists-api";
-import {changeTodolistFilterAC, FilterValuesType, TodolistDomainType} from "../todolist-reducer";
-import {useAppDispatch, useAppSelector} from "app/customHooks";
-import {addTaskTC} from "features/TodolistsList/tasks-reducer";
+import {TaskStatuses, TaskType} from "api/todolists-api";
+import {useAppDispatch, useAppSelector} from "utils/customHooks";
+import {changeTodolistFilterAC, FilterValuesType, TodolistDomainType} from "redux/todolist-reducer";
+import {addTaskTC} from "redux/tasks-reducer";
 
 
 export const Todolist = React.memo((props: PropsType) => {
@@ -22,16 +22,16 @@ export const Todolist = React.memo((props: PropsType) => {
     }, [])
 
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskTC(title, props.id))
+        dispatch(addTaskTC({todolistID: props.id, title}))
     }, [props.id])
 
 
     let tasksForTodolist = tasks;
     if (props.todolist.filter === 'active') {
-        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.New);
+        tasksForTodolist = tasks.filter((t: { status: TaskStatuses; }) => t.status === TaskStatuses.New);
     }
     if (props.todolist.filter === "completed") {
-        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.Completed);
+        tasksForTodolist = tasks.filter((t: { status: TaskStatuses; }) => t.status === TaskStatuses.Completed);
     }
 
     return <div>

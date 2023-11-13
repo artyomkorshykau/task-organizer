@@ -1,7 +1,7 @@
-import {setAppErrorAC, setAppStatusAC} from "app/app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "redux/app-reducer";
 import {ResponseType} from 'api/todolists-api'
 import {Dispatch} from "redux";
-import {AppActionType} from "app/store";
+import {AppActionType} from "redux/store";
 import {AxiosError} from "axios";
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch<AppActionType>) => {

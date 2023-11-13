@@ -1,13 +1,13 @@
 import React, {useCallback, useEffect} from "react";
-import {addTodolistTC, changeTodolistTitleTC, fetchTodolistsTC, removeTodolistTC} from "./todolist-reducer";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
-import {useAppDispatch, useAppSelector} from "app/customHooks";
 import {Navigate} from "react-router-dom";
-import {selectTodoList} from "features/TodolistsList/Todolist/todo-selector";
-import {selectIsLoggedIn} from "features/Login/auth-selectors";
+import {useAppDispatch, useAppSelector} from "utils/customHooks";
+import {selectIsLoggedIn} from "common/selectors/auth-selectors";
+import {selectTodoList} from "common/selectors/todo-selector";
+import {addTodolistTC, changeTodolistTitleTC, fetchTodolistsTC, removeTodolistTC, TodolistDomainType} from "redux/todolist-reducer";
 
 export const TodolistsList: React.FC = () => {
 
@@ -25,19 +25,19 @@ export const TodolistsList: React.FC = () => {
 
 
     const removeTodolist = useCallback((id: string) => {
-        dispatch(removeTodolistTC(id))
+        dispatch(removeTodolistTC({todolistID: id}))
     }, [])
 
     const changeTodolistTitle = useCallback((title: string, id: string) => {
-        dispatch(changeTodolistTitleTC(title, id))
+        dispatch(changeTodolistTitleTC({title, todolistId: id}))
     }, [])
 
     const addTodoList = useCallback((title: string) => {
-        dispatch(addTodolistTC(title))
+        dispatch(addTodolistTC({title}))
     }, [])
 
     if (!isLoggedIn) {
-        return <Navigate to="/login" />
+        return <Navigate to="/login"/>
     }
 
     return <>
@@ -45,7 +45,7 @@ export const TodolistsList: React.FC = () => {
             <AddItemForm addTask={addTodoList}/>
         </Grid>
         <Grid container spacing={3}>
-            {todolists.map(tl => {
+            {todolists.map((tl: TodolistDomainType) => {
                 return (<Grid item>
                     <Paper style={{padding: '10px', backgroundColor: 'transparent'}} elevation={10} square={false}>
                         <Todolist

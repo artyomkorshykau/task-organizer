@@ -10,13 +10,13 @@ import {Menu} from "@mui/icons-material";
 import {TodolistsList} from "features/TodolistsList/TodolistsList";
 import {LinearProgress} from "@mui/material";
 import {ErrorSnackBar} from "components/ErrorSnackBar/ErrorSnackBar";
-import {initializedAppTC} from "./app-reducer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "features/Login/Login";
-import {useAppDispatch, useAppSelector} from "./customHooks";
-import {logoutTC} from "features/Login/auth-reducer";
-import {selectIsLoggedIn} from "features/Login/auth-selectors";
-import {selectInitialized, selectStatus} from "app/app-selectors";
+import {logoutTC} from "redux/auth-reducer";
+import {useAppDispatch, useAppSelector} from "utils/customHooks";
+import {selectInitialized, selectStatus} from "utils/app-selectors";
+import {selectIsLoggedIn} from "common/selectors/auth-selectors";
+import {initializedAppTC} from "redux/app-reducer";
 
 
 function App() {
