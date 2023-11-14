@@ -8,25 +8,25 @@ import {fetchTaskTC} from "redux/tasks-reducer";
 import {isAxiosError} from "axios";
 
 
-// -------------------------------THUNK CREATORS-------------------------------
-
+// -------------------------------THUNK-------------------------------
 export const fetchTodolistsTC = createAsyncThunk('todolists/fetchTodolists', async (param, {
     dispatch,
     rejectWithValue
 }) => {
+    dispatch(setAppStatusAC({status: 'loading'}))
     try {
-        dispatch(setAppStatusAC({status: 'loading'}))
         const res = await todolistsAPI.getTodolist()
         dispatch(setAppStatusAC({status: 'succeeded'}))
-        res.data.forEach(el => {
+        const todos = res.data
+        todos.forEach(el => {
             dispatch(fetchTaskTC(el.id))
-            return {todolists: res.data}
         })
+        return {todolists: todos}
     } catch (error) {
         if (isAxiosError(error)) {
             handleServerNetworkError(error, dispatch)
-            return rejectWithValue(null)
         }
+        return rejectWithValue(null)
     }
 })
 
@@ -40,8 +40,8 @@ export const removeTodolistTC = createAsyncThunk('todolist/removeTodolist', asyn
     } catch (error) {
         if (isAxiosError(error)) {
             handleServerNetworkError(error, dispatch)
-            return rejectWithValue(null)
         }
+        return rejectWithValue(null)
     }
 })
 
@@ -57,8 +57,8 @@ export const addTodolistTC = createAsyncThunk('todolist/addTodolists', async (pa
     } catch (error) {
         if (isAxiosError(error)) {
             handleServerNetworkError(error, dispatch)
-            return rejectWithValue(null)
         }
+        return rejectWithValue(null)
     }
 })
 
@@ -69,11 +69,11 @@ export const changeTodolistTitleTC = createAsyncThunk('todolist/changeTodolistTi
     try {
         await todolistsAPI.updateTodolist(param.title, param.todolistId)
         return {title: param.title, todolist: param.todolistId}
-    } catch (error: any) {
+    } catch (error) {
         if (isAxiosError(error)) {
             handleServerNetworkError(error, dispatch)
-            return rejectWithValue(null)
         }
+        return rejectWithValue(null)
     }
 })
 
@@ -97,7 +97,7 @@ export const slice = createSlice({
                 return action.payload.todos
             })
             .addCase(fetchTodolistsTC.fulfilled, (state, action) => {
-                action.payload.todolists.map(el => ({...el, filter: 'all', entityStatus: 'idle'}))
+                return action.payload.todolists.map(el => ({...el, filter: 'all', entityStatus: 'idle'}))
             })
             .addCase(removeTodolistTC.fulfilled, (state, action) => {
                 const index = state.findIndex(el => el.id === action.payload.id)

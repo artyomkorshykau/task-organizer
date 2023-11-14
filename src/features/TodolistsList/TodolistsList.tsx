@@ -14,6 +14,7 @@ export const TodolistsList: React.FC = () => {
     const dispatch = useAppDispatch()
     const todolists = useAppSelector(selectTodoList)
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
+    const tasks = useAppSelector(state => state.tasks)
 
 
     useEffect(() => {
@@ -55,6 +56,7 @@ export const TodolistsList: React.FC = () => {
                             title={tl.title}
                             removeTodolist={removeTodolist}
                             changeTodolistTitle={changeTodolistTitle}
+                            tasks={tasks[tl.id]}
                         />
                     </Paper>
                 </Grid>)
