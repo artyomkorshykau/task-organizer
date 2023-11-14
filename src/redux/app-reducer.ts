@@ -3,7 +3,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setIsLoggedIn} from "redux/auth-reducer";
 
 
-// -------------------------------THUNK CREATORS-------------------------------
+// -------------------------------THUNK-------------------------------
 export const initializedAppTC = createAsyncThunk('app/initialized', async (param, {dispatch}) => {
     const res = await authAPI.me()
     if (res.data.resultCode === 0) {

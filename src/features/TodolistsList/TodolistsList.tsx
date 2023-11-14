@@ -7,7 +7,13 @@ import {Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "utils/customHooks";
 import {selectIsLoggedIn} from "common/selectors/auth-selectors";
 import {selectTodoList} from "common/selectors/todo-selector";
-import {addTodolistTC, changeTodolistTitleTC, fetchTodolistsTC, removeTodolistTC, TodolistDomainType} from "redux/todolist-reducer";
+import {
+    addTodolistTC,
+    changeTodolistTitleTC,
+    fetchTodolistsTC,
+    removeTodolistTC,
+    TodolistDomainType
+} from "redux/todolist-reducer";
 
 export const TodolistsList: React.FC = () => {
 

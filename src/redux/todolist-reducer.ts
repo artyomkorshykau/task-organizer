@@ -1,9 +1,8 @@
 import {todolistsAPI, TodolistType} from "api/todolists-api";
-import {handleServerNetworkError} from "utils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {clearAppData} from "common/actions/common.actions";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
-import {AppThunk} from "./store";
 import {fetchTaskTC} from "redux/tasks-reducer";
 import {isAxiosError} from "axios";
 
@@ -52,8 +51,14 @@ export const addTodolistTC = createAsyncThunk('todolist/addTodolists', async (pa
     try {
         dispatch(setAppStatusAC({status: 'loading'}))
         const res = await todolistsAPI.createTodolist(param.title)
-        dispatch(setAppStatusAC({status: 'succeeded'}))
-        return {todolist: res.data.data.item}
+        if (res.data.resultCode === 0) {
+            dispatch(setAppStatusAC({status: 'succeeded'}))
+            return {todolist: res.data.data.item}
+        } else {
+            handleServerAppError(res.data, dispatch)
+            return rejectWithValue(null)
+        }
+
     } catch (error) {
         if (isAxiosError(error)) {
             handleServerNetworkError(error, dispatch)
@@ -67,7 +72,7 @@ export const changeTodolistTitleTC = createAsyncThunk('todolist/changeTodolistTi
     rejectWithValue
 }) => {
     try {
-        await todolistsAPI.updateTodolist(param.title, param.todolistId)
+        await todolistsAPI.updateTodolist(param.todolistId, param.title)
         return {title: param.title, todolist: param.todolistId}
     } catch (error) {
         if (isAxiosError(error)) {
@@ -102,7 +107,7 @@ export const slice = createSlice({
             .addCase(removeTodolistTC.fulfilled, (state, action) => {
                 const index = state.findIndex(el => el.id === action.payload.id)
                 if (index > -1) {
-                    state.slice(index, 1)
+                    state.splice(index, 1)
                 }
             })
             .addCase(addTodolistTC.fulfilled, (state, action) => {
