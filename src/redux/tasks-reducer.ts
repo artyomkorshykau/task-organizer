@@ -1,89 +1,15 @@
-import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateModelTaskType} from "api/todolists-api";
-import {AppRootStateType} from "redux/store";
-import {addTodolistTC, fetchTodolistsTC, removeTodolistTC} from "redux/todolist-reducer";
-import {setAppStatusAC} from "redux/app-reducer";
-import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {TaskPriorities, TaskStatuses, TaskType} from "api/todolists-api";
+import {createSlice} from "@reduxjs/toolkit";
 import {clearAppData} from "common/actions/common.actions";
-import {isAxiosError} from "axios";
-
-
-// -------------------------------THUNK-------------------------------
-export const fetchTaskTC = createAsyncThunk('tasks/fetchTasks', async (todoListId: string, thunkAPI) => {
-    thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
-    const res = await todolistsAPI.getTasks(todoListId)
-    thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
-    return {todoListId, tasks: res.data.items}
-})
-
-export const removeTaskTC = createAsyncThunk('tasks/removeTask', async (param: { todolistId: string, id: string }) => {
-    await todolistsAPI.deleteTask(param.todolistId, param.id)
-    return {id: param.id, todolistId: param.todolistId}
-})
-
-export const addTaskTC = createAsyncThunk('tasks/addTasks', async (param: { todolistID: string, title: string }, {
-    dispatch,
-    rejectWithValue
-}) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
-    try {
-        const res = await todolistsAPI.createTask(param.todolistID, param.title)
-        if (res.data.resultCode === 0) {
-            dispatch(setAppStatusAC({status: 'succeeded'}))
-            return {task: res.data.data.item}
-        } else {
-            handleServerAppError(res.data, dispatch)
-            return rejectWithValue(null)
-        }
-    } catch (error) {
-        if (isAxiosError(error)) {
-            handleServerNetworkError(error, dispatch)
-        }
-        return rejectWithValue(null)
-    }
-})
-
-export const updateTaskTC = createAsyncThunk('task/updateTask', async ({
-                                                                           taskID,
-                                                                           domainModel,
-                                                                           todolistID
-                                                                       }: { taskID: string, domainModel: UpdateDomainTaskModelType, todolistID: string }, {
-                                                                           dispatch,
-                                                                           getState,
-                                                                           rejectWithValue
-                                                                       }) => {
-    const state = getState() as AppRootStateType
-    const task = state.tasks[todolistID].find(el => el.id === taskID)
-    if (!task) {
-        return rejectWithValue('task not found!')
-    }
-    const apiModel: UpdateModelTaskType = {
-        deadline: task.deadline,
-        description: task.description,
-        priority: task.priority,
-        startDate: task.startDate,
-        title: task.title,
-        status: task.status,
-        ...domainModel
-    }
-    try {
-        const res = await todolistsAPI.updateTask(todolistID, taskID, apiModel)
-        if (res.data.resultCode === 0) {
-            return {taskID, domainModel, todolistID}
-        } else {
-            handleServerAppError(res.data, dispatch)
-            return rejectWithValue(null)
-        }
-
-    } catch (error) {
-        if (isAxiosError(error)) {
-            handleServerNetworkError(error, dispatch)
-        }
-        return rejectWithValue(null)
-    }
-})
-
-// -------------------------------SLICE-------------------------------
+import {
+    addTaskTC,
+    addTodolistTC,
+    fetchTaskTC,
+    fetchTodolistsTC,
+    removeTaskTC,
+    removeTodolistTC,
+    updateTaskTC
+} from "redux/thunks/thunks";
 
 const slice = createSlice({
     name: 'task',

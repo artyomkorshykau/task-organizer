@@ -12,11 +12,10 @@ import {LinearProgress} from "@mui/material";
 import {ErrorSnackBar} from "components/ErrorSnackBar/ErrorSnackBar";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Login} from "features/Login/Login";
-import {logoutTC} from "redux/auth-reducer";
 import {useAppDispatch, useAppSelector} from "utils/customHooks";
-import {selectInitialized, selectStatus} from "utils/app-selectors";
 import {selectIsLoggedIn} from "common/selectors/auth-selectors";
-import {initializedAppTC} from "redux/app-reducer";
+import {initializedAppTC, logoutTC} from "redux/thunks/thunks";
+import {selectInitialized, selectStatus} from "common/selectors/app-selectors";
 
 
 function App() {

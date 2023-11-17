@@ -1,19 +1,6 @@
-import {authAPI} from "api/todolists-api";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {setIsLoggedIn} from "redux/auth-reducer";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {initializedAppTC} from "redux/thunks/thunks";
 
-
-// -------------------------------THUNK-------------------------------
-export const initializedAppTC = createAsyncThunk('app/initialized', async (param, {dispatch}) => {
-    const res = await authAPI.me()
-    if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedIn({value: true}))
-    } else {
-
-    }
-})
-
-// -------------------------------SLICE----------------------------------------
 const slice = createSlice({
     name: 'app',
     initialState: {

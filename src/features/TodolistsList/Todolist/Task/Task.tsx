@@ -5,7 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import EditableSpan from "components/EditableSpan/EditableSpan";
 import {TaskStatuses, TaskType} from "api/todolists-api";
 import {useAppDispatch} from "utils/customHooks";
-import {removeTaskTC, updateTaskTC} from "redux/tasks-reducer";
+import {removeTaskTC, updateTaskTC} from "redux/thunks/thunks";
 
 export const Task = React.memo((props: TaskPropsType) => {
     const dispatch = useAppDispatch()

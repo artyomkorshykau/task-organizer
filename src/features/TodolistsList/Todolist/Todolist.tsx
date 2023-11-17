@@ -9,7 +9,7 @@ import {Task} from "./Task/Task";
 import {TaskStatuses, TaskType} from "api/todolists-api";
 import {useAppDispatch} from "utils/customHooks";
 import {changeTodolistFilterAC, FilterValuesType, TodolistDomainType} from "redux/todolist-reducer";
-import {addTaskTC} from "redux/tasks-reducer";
+import {addTaskTC} from "redux/thunks/thunks";
 
 
 export const Todolist = React.memo((props: PropsType) => {

@@ -7,7 +7,7 @@ import {useFormik} from "formik";
 import {Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "utils/customHooks";
 import {selectIsLoggedIn} from "common/selectors/auth-selectors";
-import {loginTC} from "redux/auth-reducer";
+import {loginTC} from "redux/thunks/thunks";
 
 
 type FormValueType = {
