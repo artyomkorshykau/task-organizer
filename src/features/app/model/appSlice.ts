@@ -1,24 +1,46 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RequestStatus} from "features/app/model/types/appSlice.types";
+import {AnyAction, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {RequestStatus} from "features/app/model/types/app.types";
+import {todosActions} from "features/todolist-list/model/todolists/todosSlice";
+import {authActions} from "features/auth/model/authSlice";
+
+export const InitialState = {
+    status: 'idle' as RequestStatus,
+    error: null as string | null,
+    initialized: false
+}
 
 const slice = createSlice({
     name: 'app',
-    initialState: {
-        status: 'idle' as RequestStatus,
-        error: null as string | null,
-        initialized: false
-    },
+    initialState: InitialState,
     reducers: {
-        setAppStatusAC(state, action: PayloadAction<{ status: RequestStatus }>) {
-            state.status = action.payload.status
-        },
-        setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
+        setAppError(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error
-        },
-        setAppInitialized: (state, action: PayloadAction<{ initialized: boolean }>) => {
-            state.initialized = action.payload.initialized
         }
     },
+    extraReducers: builder => {
+        builder
+            .addMatcher(isPending(todosActions.fetchTodolists),
+                (state) => {
+                    state.status = 'loading'
+                })
+            .addMatcher(isFulfilled || isRejected(todosActions.fetchTodolists),
+                (state) => {
+                    state.status = 'idle'
+                })
+            .addMatcher(isRejected, (state, action: AnyAction) => {
+                state.status = 'failed'
+                state.error = action.error.message
+            })
+            .addMatcher(isRejected, (state, action: AnyAction) => {
+                state.status = 'failed'
+                if (action.payload) {
+                    state.error = action.error.message ? action.error.message : 'Some error occured'
+                }
+            })
+            .addMatcher(isFulfilled(authActions.initializedApp), (state, action) => {
+                state.initialized = true
+            })
+    }
 })
 
 export const appSlice = slice.reducer

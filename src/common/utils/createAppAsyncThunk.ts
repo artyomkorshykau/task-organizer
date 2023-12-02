@@ -1,5 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {AppDispatch, AppRootState} from "redux/store";
+import {AppDispatch, AppRootState} from "common/utils/types/utils.types";
+import {BaseResponseType} from "features/todolist-list/api/types/api.types";
 
 /**
  * Данная функция оборачивает функцию createAsyncThunk, что дать ей частичную типизацию
@@ -11,5 +12,5 @@ import {AppDispatch, AppRootState} from "redux/store";
 export const createAppAsyncThunk = createAsyncThunk.withTypes<{
     state: AppRootState
     dispatch: AppDispatch
-    rejectValue: null | string
+    rejectValue: null | BaseResponseType;
 }>()

@@ -1,33 +1,40 @@
 import React, {ChangeEvent, memo, useState} from 'react';
 import TextField from "@mui/material/TextField";
-import {EditableSpanProps} from "common/components/EditableSpan/editableSpan.types";
+import {useActions} from "common/hooks/useActions";
+import {todosActions} from "features/todolist-list/model/todolists/todosSlice";
 
-export const EditableSpan = memo((props: EditableSpanProps) => {
+type Props = {
+    title: string
+    id: string
+}
 
+export const EditableSpan = memo(({title, id}: Props) => {
+
+    const {changeTodolistTitle} = useActions(todosActions)
 
     let [editMode, setEditMode] = useState(false)
-    let [title, setTitle] = useState(props.title)
+    let [newTitle, setNewTitle] = useState(title)
 
     const activatedEditModeHandler = () => {
         setEditMode(!editMode)
-        setTitle(props.title)
+        setNewTitle(title)
     }
 
     const activatedViewModeHandler = () => {
         setEditMode(false);
-        props.onChange(title, props.id);
+        changeTodolistTitle({title: newTitle, todolistId: id})
     }
 
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+        setNewTitle(e.currentTarget.value)
     }
 
 
     return (
         editMode ?
-            <TextField id="standard-basic" variant="standard" value={title} onBlur={activatedViewModeHandler}
+            <TextField id="standard-basic" variant="standard" value={newTitle} onBlur={activatedViewModeHandler}
                        autoFocus onChange={changeTitle}/> :
-            <span onDoubleClick={activatedEditModeHandler}>{props.title}</span>
+            <span onDoubleClick={activatedEditModeHandler}>{title}</span>
     );
 });
 
