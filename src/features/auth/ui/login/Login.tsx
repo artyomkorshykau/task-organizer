@@ -20,25 +20,27 @@ export const Login = () => {
         <Grid item xs={4} display='flex' justifyContent='space-evenly' marginTop='100px'>
             <form onSubmit={formik.handleSubmit}>
                 <FormLabel>
-                    <p>
-                        ..Здарова отец
-                    </p>
+                    {
+                        formik.errors.email ? <p>мда...</p> : <p>...Здарова отец</p>
+                    }
                 </FormLabel>
                 <FormGroup>
                     <TextField
+                        error={!!formik.errors.email}
                         label='Email'
                         margin='normal'
                         {...formik.getFieldProps('email')}
                     />
-                    {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                    {formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
 
                     <TextField
+                        error={!!formik.errors.email}
                         type='password'
                         label='Password'
                         margin='normal'
                         {...formik.getFieldProps('password')}
                     />
-                    {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                    {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
 
                     <FormControlLabel
                         label={'Remember'}
@@ -46,7 +48,10 @@ export const Login = () => {
                                            checked={formik.values.rememberMe}
                         />}
                     />
-                    <Button type={'submit'} variant={'contained'} color={'primary'}>Login
+                    <Button type={'submit'}
+                            variant={'contained'}
+                            color={'primary'}
+                            disabled={formik.isSubmitting}>Авторизация
                     </Button>
                 </FormGroup>
             </form>

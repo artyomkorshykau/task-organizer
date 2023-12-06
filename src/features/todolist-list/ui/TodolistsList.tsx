@@ -33,13 +33,15 @@ export const TodolistsList = () => {
 
     return <>
         <Grid container style={{margin: '20px 0'}}>
+            <p style={{fontStyle: 'italic', marginRight: '20px'}}>Create todolist</p>
             <AddItemForm addItem={addTodolistHandler}/>
         </Grid>
 
         <Grid container spacing={3} style={{flexWrap: 'nowrap', overflowX: 'scroll', maxWidth: '100%'}}>
             {todolists.map((tl: TodolistDomain) => {
                 return (<Grid item>
-                    <Paper style={{padding: '10px', backgroundColor: 'transparent', width: '280px'}} elevation={10}
+                    <Paper style={{padding: '10px', backgroundColor: 'transparent', width: '280px'}}
+                           elevation={10}
                            square={false}>
                         <Todolist
                             todolist={tl}

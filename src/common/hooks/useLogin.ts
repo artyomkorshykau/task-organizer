@@ -1,21 +1,14 @@
 import {useActions} from "common/hooks/useActions";
 import {authActions} from "features/auth/model/authSlice";
 import {useFormik} from "formik";
+import {BaseResponseType} from "features/todolist-list/api/types/api.types";
+import {appActions} from "features/app/model/appSlice";
 
 export const useLogin = () => {
     const {login} = useActions(authActions)
+    const {setAppError} = useActions(appActions)
 
     const formik = useFormik({
-
-        validate: (values) => {
-            if (!values.email) {
-                return {email: 'email is required!'}
-            }
-
-            if (!values.password) {
-                return {password: 'password is required'}
-            }
-        },
 
         initialValues: {
             email: '',
@@ -23,8 +16,20 @@ export const useLogin = () => {
             rememberMe: false
         },
 
-        onSubmit: async (values) => {
+        onSubmit: async (values, formikHelpers) => {
+            formikHelpers.setSubmitting(true)
             login(values)
+                .unwrap()
+                .catch((error: BaseResponseType) => {
+                    error.fieldsErrors.forEach(el => {
+                        return formikHelpers.setFieldError(el.field, el.error)
+                    })
+                })
+                .finally(() => {
+                        formikHelpers.setSubmitting(false)
+                        setAppError({error: null})
+                    }
+                )
         }
     });
     return {formik}

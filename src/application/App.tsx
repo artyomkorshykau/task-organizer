@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import './App.css';
 import {LinearProgress} from "@mui/material";
 import {ErrorSnackBar} from "common/components/ErrorSnackBar/ErrorSnackBar";
 import {useAppSelector} from "common/hooks/useAppSelector";
@@ -8,7 +7,6 @@ import {authActions} from "features/auth/model/authSlice";
 import {useActions} from "common/hooks/useActions";
 import {Content} from "application/Content/Content";
 import {AppToolBar} from "application/AppToolBar/AppBar";
-
 
 export const App = () => {
 

@@ -2,6 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
+import {useActions} from "common/hooks/useActions";
+import {appActions} from "features/app/model/appSlice";
 
 type Props = {
     addItem: (param: { title: string }) => Promise<any>
@@ -12,28 +14,36 @@ export const AddItemForm = React.memo(({addItem}: Props) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
+    const {setAppError} = useActions(appActions)
+
     const addItemHandler = async () => {
         if (title.trim() !== "") {
             addItem({title})
                 .then(() => {
-                        setTitle("")
+                    setTitle("")
                 })
                 .catch((error) => {
-                    error.messages ? setError(error.messages[0]) : setError(error.message)
+                    if (error.messages) {
+                        setError(error.messages[0])
+                        setAppError({error: null})
+                    } else {
+                        setAppError({error: error.message})
+                    }
                 })
         } else {
             setError("Title is required");
         }
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const ChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    const KeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) setError(null);
         if (e.charCode === 13) addItemHandler();
     }
+
 
     return (
         <div style={{width: '280px'}}>
@@ -42,8 +52,8 @@ export const AddItemForm = React.memo(({addItem}: Props) => {
                 multiline
                 maxRows={1}
                 value={title}
-                onChange={onChangeHandler}
-                onKeyPress={onKeyPressHandler}
+                onChange={ChangeHandler}
+                onKeyPress={KeyPressHandler}
                 size="small"
                 error={!!error}
                 helperText={error}

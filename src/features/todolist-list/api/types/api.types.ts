@@ -3,7 +3,7 @@ import {TaskType} from "features/todolist-list/model/tasks/types/tasks.types";
 export type BaseResponseType<D = {}> = {
     resultCode: number
     messages: string[]
-    fieldsErrors: Array<{ filed: string, error: string }>
+    fieldsErrors: Array<{ field: string, error: string }>
     data: D
 }
 

@@ -9,9 +9,11 @@ type Props = {
 
 export const DeleteTodolistButton = ({removeTodolist, id}: Props) => {
     return <>
-        <IconButton aria-label="delete" onClick={() => {
-            removeTodolist({todolistID: id})
-        }} style={{width: '100%', borderRadius: '0px'}}>
+        <IconButton aria-label="delete"
+                    onClick={() => {
+                        removeTodolist({todolistID: id})
+                    }}
+                    style={{width: '100%', borderRadius: '0px'}}>
             <Clear color={'error'}/>
         </IconButton>
     </>

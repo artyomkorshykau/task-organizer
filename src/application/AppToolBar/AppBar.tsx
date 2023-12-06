@@ -34,9 +34,9 @@ export const AppToolBar = () => {
                     <Menu/>
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                    Menu
+                    Меню
                 </Typography>
-                {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
+                {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Выйти</Button>}
             </Toolbar>
             {status === 'loading' && <LinearProgress color="inherit"/>}
         </AppBar>

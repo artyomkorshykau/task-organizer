@@ -21,7 +21,7 @@ export const Tasks = ({id, tasks, todolist}: Props) => {
         {
             tasksForTodolist.map(t => <Task task={t} todolistID={id} key={t.id}/>)
         }
-        {!tasksForTodolist.length &&
-            <span style={{padding: '10px', color: 'grey', fontStyle: 'italic'}}>Create your first task!</span>}
+        {!tasks.length &&
+            <span style={{padding: '10px', color: 'black', fontStyle: ' italic'}}>Create your first task!</span>}
     </div>
 }

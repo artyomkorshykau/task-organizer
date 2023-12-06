@@ -7,6 +7,7 @@ import {TaskStatuses} from "common/enums/TaskStatusesEnum";
 import {useActions} from "common/hooks/useActions";
 import {taskActions} from "features/todolist-list/model/tasks/tasksSlice";
 import {TaskType} from "features/todolist-list/model/tasks/types/tasks.types";
+import style from './Task.module.css'
 
 type Props = {
     task: TaskType
@@ -37,7 +38,7 @@ export const Task = React.memo(({task, todolistID}: Props) => {
 
         <Checkbox onChange={changeTaskStatusHandler} checked={task.status !== TaskStatuses.New} color="primary"/>
 
-        <span className={task.status == TaskStatuses.Completed ? "is-done" : ""}>
+        <span className={task.status == TaskStatuses.Completed ? style.isDone : ""}>
             <EditableSpan title={task.title} id={task.id}/>
         </span>
     </div>
