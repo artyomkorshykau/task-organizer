@@ -18,19 +18,19 @@ export const FilterTasksButtons = ({todolist}: Props) => {
 
     return (
         <div style={{textAlign: 'center'}}>
-            <ButtonGroup size="small" aria-label="small button group" style={{paddingTop: '20px'}}>
-                <Button variant={todolist.filter === 'all' ? 'outlined' : 'text'}
+            <ButtonGroup size="small" aria-label="small button group" style={{marginTop: '20px'}}>
+                <Button variant={todolist.filter === 'all' ? 'contained' : 'outlined'}
                         onClick={() => changeFilterHandler('all')}
-                        color={'inherit'}
+                        color={'primary'}
                 >All
                 </Button>
-                <Button variant={todolist.filter === 'active' ? 'outlined' : 'text'}
+                <Button variant={todolist.filter === 'active' ? 'contained' : 'outlined'}
                         onClick={() => changeFilterHandler('active')}
                         color={'primary'}>Active
                 </Button>
-                <Button variant={todolist.filter === 'completed' ? 'outlined' : 'text'}
+                <Button variant={todolist.filter === 'completed' ? 'contained' : 'outlined'}
                         onClick={() => changeFilterHandler('completed')}
-                        color={'secondary'}>Completed
+                        color={'success'}>Completed
                 </Button>
             </ButtonGroup>
         </div>

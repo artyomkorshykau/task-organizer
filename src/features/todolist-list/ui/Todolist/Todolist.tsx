@@ -26,11 +26,11 @@ export const Todolist = React.memo((props: Props) => {
         addTask({todolistID: id, title: param.title})
     }, [id])
 
-    return <>
+    return <div>
         <DeleteTodolistButton removeTodolist={removeTodolist} id={id}/>
         <TodolistTitle title={title} id={id}/>
         <AddItemForm addItem={addTaskHandler}/>
         <Tasks id={id} tasks={tasks} todolist={todolist}/>
         <FilterTasksButtons todolist={todolist}/>
-    </>
+    </div>
 })

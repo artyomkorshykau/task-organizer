@@ -32,7 +32,7 @@ export const TodolistsList = () => {
     if (!isLoggedIn) return <Navigate to="/login"/>
 
     return <>
-        <Grid container style={{padding: '20px'}}>
+        <Grid container style={{margin: '20px 0'}}>
             <AddItemForm addItem={addTodolistHandler}/>
         </Grid>
 
