@@ -11,8 +11,8 @@ import {
 } from "features/todolist-list/model/tasks/types/tasks.types";
 import {todosActions} from "features/todolist-list/model/todolists/todosSlice";
 import {AppRootState} from "common/utils/types/utils.types";
-import {tasksApi} from "features/todolist-list/api/tasksApi";
 import {clearAppData} from "features/actions/common.actions";
+import {tasksApi} from "features/todolist-list/api/tasksApi";
 
 const slice = createSlice({
     name: 'task',
