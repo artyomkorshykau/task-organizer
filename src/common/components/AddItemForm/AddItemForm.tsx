@@ -2,6 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddIcon from '@mui/icons-material/Add';
 import {useActions} from "common/hooks/useActions";
 import {appActions} from "features/app/model/appSlice";
 
@@ -60,7 +62,7 @@ export const AddItemForm = React.memo(({addItem}: Props) => {
                 style={{width: '82%'}}
             />
             <IconButton onClick={addItemHandler} style={{marginLeft: '10px'}}>
-                <AddCircleOutlined color='success'/>
+                <AddBoxIcon fontSize={'medium'}/>
             </IconButton>
         </div>
     )

@@ -38,8 +38,6 @@
     "web-vitals": "^3.0.4"
   },
   "scripts": {
-    "format": "prettier --write src",
-    "lint": "eslint src --ext .jsx,.js,.tsx,.ts  --no-error-on-unmatched-pattern --fix && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

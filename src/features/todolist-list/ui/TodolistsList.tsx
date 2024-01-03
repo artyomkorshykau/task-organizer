@@ -37,7 +37,10 @@ export const TodolistsList = () => {
       <AddItemForm addItem={addTodolistHandler} />
     </Grid>
 
-    <Grid container spacing={3} style={{ flexWrap: "nowrap", overflowX: "scroll", maxWidth: "100%" }}>
+    <Grid container
+          spacing={3}
+          style={{ flexWrap: "nowrap", overflowX: "auto", maxWidth: "100%", minHeight: "100vh" }}
+    >
       {todolists.map((tl: TodolistDomain) => {
         return (<Grid item>
           <Paper style={{ padding: "10px", backgroundColor: "transparent", width: "280px" }}
