@@ -8,7 +8,7 @@ export const Content = () => {
   return <>
     <Container fixed style={{ maxWidth: "100%" }}>
       <Routes>
-        <Route path={"/"} element={<TodolistsList />} />
+        <Route path={"*"} element={<TodolistsList />} />
         <Route path={"/login"} element={<Login />} />
       </Routes>
     </Container>
