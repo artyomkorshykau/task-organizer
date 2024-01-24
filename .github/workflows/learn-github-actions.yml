@@ -16,7 +16,7 @@ jobs:
       - name: install modules
         run: yarn install
       - name: build project
-        run: yarn build
+        run: yarn run build
       - name: unit tests
         run: yarn test
       - name: deploy
