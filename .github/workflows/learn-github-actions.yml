@@ -15,8 +15,6 @@ jobs:
           node-version: ${{matrix.node-version}}
       - name: install modules
         run: yarn install
-      - name: build project
-        run: yarn run build
       - name: unit tests
         run: yarn test
       - name: deploy
