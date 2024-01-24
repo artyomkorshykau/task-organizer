@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { LinearProgress } from "@mui/material";
 import { ErrorSnackBar } from "common/components/ErrorSnackBar/ErrorSnackBar";
 import { useAppSelector } from "common/hooks/useAppSelector";
 import { selectInitialized } from "features/app/model/appSelectors";
