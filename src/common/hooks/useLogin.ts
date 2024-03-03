@@ -1,8 +1,8 @@
 import {useActions} from "common/hooks/useActions";
-import {authActions} from "features/auth/model/authSlice";
+import {authActions} from "modules/auth/model/authSlice";
 import {useFormik} from "formik";
-import {BaseResponseType} from "features/todolist-list/api/types/api.types";
-import {appActions} from "features/app/model/appSlice";
+import {BaseResponseType} from "modules/todolist-list/api/types/api.types";
+import {appActions} from "modules/app/model/appSlice";
 
 export const useLogin = () => {
     const {login} = useActions(authActions)

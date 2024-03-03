@@ -1,7 +1,7 @@
 import React, {ChangeEvent, memo, useState} from 'react';
 import TextField from "@mui/material/TextField";
 import {useActions} from "common/hooks/useActions";
-import {todosActions} from "features/todolist-list/model/todolists/todosSlice";
+import {todosActions} from "modules/todolist-list/model/todolists/todosSlice";
 
 type Props = {
     title: string

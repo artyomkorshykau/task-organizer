@@ -6,10 +6,10 @@ import Button from "@mui/material/Button";
 import {LinearProgress} from "@mui/material";
 import React, {useCallback} from "react";
 import {useAppSelector} from "common/hooks/useAppSelector";
-import {selectStatus} from "features/app/model/appSelectors";
-import {selectIsLoggedIn} from "features/auth/model/authSelectors";
+import {selectStatus} from "modules/app/model/appSelectors";
+import {selectIsLoggedIn} from "modules/auth/model/authSelectors";
 import {useActions} from "common/hooks/useActions";
-import {authActions} from "features/auth/model/authSlice";
+import {authActions} from "modules/auth/model/authSlice";
 import AppBar from "@mui/material/AppBar";
 
 export const AppToolBar = () => {

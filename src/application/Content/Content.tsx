@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import { TodolistsList } from "features/todolist-list/ui/TodolistsList";
-import { Login } from "features/auth/ui/login/Login";
+import { TodolistsList } from "modules/todolist-list/ui/TodolistsList";
+import { Login } from "modules/auth/ui/login/Login";
 import Container from "@mui/material/Container";
 import React from "react";
 

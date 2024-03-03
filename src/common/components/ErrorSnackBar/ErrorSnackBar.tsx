@@ -2,8 +2,8 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import {useAppSelector} from "common/hooks/useAppSelector";
-import {selectError} from "features/app/model/appSelectors";
-import {appActions} from "features/app/model/appSlice";
+import {selectError} from "modules/app/model/appSelectors";
+import {appActions} from "modules/app/model/appSlice";
 import {useActions} from "common/hooks/useActions";
 import {Alert} from "common/components/ErrorSnackBar/Alert";
 

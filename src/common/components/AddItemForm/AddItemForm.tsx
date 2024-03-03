@@ -5,7 +5,7 @@ import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import AddIcon from '@mui/icons-material/Add';
 import {useActions} from "common/hooks/useActions";
-import {appActions} from "features/app/model/appSlice";
+import {appActions} from "modules/app/model/appSlice";
 
 type Props = {
     addItem: (param: { title: string }) => Promise<any>

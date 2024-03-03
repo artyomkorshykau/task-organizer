@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AppDispatch, AppRootState} from "common/utils/types/utils.types";
-import {BaseResponseType} from "features/todolist-list/api/types/api.types";
+import {BaseResponseType} from "modules/todolist-list/api/types/api.types";
 
 /**
  * Данная функция оборачивает функцию createAsyncThunk, что дать ей частичную типизацию
